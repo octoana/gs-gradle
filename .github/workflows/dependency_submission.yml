@@ -18,5 +18,13 @@ jobs:
       with:
         distribution: 'temurin'
         java-version: 17
+    
+    - uses: gradle/actions/setup-gradle@v4
+      id: setup-gradle
+      with:
+        gradle-version: release-candidate
+    - run: gradle build --dry-run # just test build configuration
+    - run: echo "The release-candidate version was ${{ steps.setup-gradle.outputs.gradle-version }}"
+    
     - name: Generate and submit dependency graph
       uses: gradle/actions/dependency-submission@v4
